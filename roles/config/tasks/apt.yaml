@@ -1,0 +1,19 @@
+# https://pve.proxmox.com/wiki/Package_Repositories
+
+- name: Template /etc/apt.sources.list.d config files
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/etc/apt/sources.list.d/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+  with_items:
+    - ceph.list
+    - pve-community.list
+
+- name: Ensure enterprise repo configuration is absent
+  ansible.builtin.file:
+    path: "/etc/apt/sources.list.d/pve-enterprise.list"
+    state: absent
+
