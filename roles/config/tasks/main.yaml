@@ -1,1 +1,2 @@
 - ansible.builtin.include_tasks: apt.yaml
+- ansible.builtin.include_tasks: sshd.yaml
