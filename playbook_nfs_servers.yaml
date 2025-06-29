@@ -1,0 +1,9 @@
+
+---
+- name: NFS server config playbook
+  hosts: nfs-servers
+  remote_user: root
+  gather_facts: true
+
+  roles:
+    - ../roles/nfs-server
