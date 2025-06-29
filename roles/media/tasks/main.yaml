@@ -1,0 +1,37 @@
+---
+- name: Ensure nfs-common is installed
+  when: ansible_os_family == 'Debian'
+  apt:
+    pkg: nfs-common
+  become: true
+
+- name: Create /wunderhort directory if it does not exist
+  ansible.builtin.file:
+    path: /wunderhort
+    state: directory
+    owner: leon
+    group: leon
+    mode: '0755'
+  become: true
+
+# our nfs shares squash the root user to "nobody" on the remote server
+# operations must use a user with permissions, i.e. leon
+- name: Create /wunderhort/MOUNTPOINT directory if it does not exist
+  ansible.builtin.file:
+    path: /wunderhort/{{ item }}
+    state: directory
+    owner: leon
+    group: leon
+    mode: '0755'
+  with_items: "{{ nas.wunderhort }}"
+
+
+- name: Insert/Update NFS mount configuration into fstab and validate it
+  ansible.builtin.blockinfile:
+    block: "{{ lookup('ansible.builtin.file', 'fstab') }}"
+    path: /etc/fstab
+    backup: yes
+    validate: /usr/bin/findmnt -F %s
+    append_newline: true
+    prepend_newline: true
+  become: true
