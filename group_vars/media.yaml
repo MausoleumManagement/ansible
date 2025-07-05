@@ -1,0 +1,7 @@
+deb_packages_specific:
+  - nfs-common
+
+
+nas:
+  wunderhort:
+    - medien

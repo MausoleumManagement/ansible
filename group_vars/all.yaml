@@ -1,0 +1,23 @@
+deb_packages_general:
+  # text
+  - jq
+  - yq
+  - neovim
+  # development
+  - git
+  - ripgrep
+  - shellcheck
+  - python-is-python3
+  # admin
+  - rsync
+  - nmap
+  - inetutils-telnet
+  - btop
+  - powertop
+  - lshw
+  - ipmitool
+  # files
+  - wget
+  - ncdu
+  - 7zip
+
