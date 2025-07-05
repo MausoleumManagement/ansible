@@ -1,3 +1,5 @@
+# every host is in this group by default
+
 deb_packages_general:
   # text
   - jq

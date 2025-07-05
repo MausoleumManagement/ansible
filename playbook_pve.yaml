@@ -1,9 +1,11 @@
 
 ---
 - name: PVE server config playbook
-  hosts: pve-hosts
+  hosts: pve
   remote_user: root
   gather_facts: true
 
   roles:
     - ../roles/pve_config
+    - ../roles/packaged_software
+
