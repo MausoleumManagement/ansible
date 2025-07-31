@@ -1,3 +1,4 @@
 deb_packages_specific:
   - lshw
   - lm-sensors
+  - mbuffer

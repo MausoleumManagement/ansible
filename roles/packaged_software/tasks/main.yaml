@@ -1,5 +1,4 @@
 ---
-
 - name: Build list of all packages
   set_fact:
     apt_packages: "{{ deb_packages_general + deb_packages_specific }}"
