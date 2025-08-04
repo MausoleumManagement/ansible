@@ -1,4 +1,3 @@
-
 ---
 - name: NFS server config playbook
   hosts: nfs-servers
@@ -6,4 +5,4 @@
   gather_facts: true
 
   roles:
-    - ../roles/nfs_server
+    - nfs_server

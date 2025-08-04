@@ -22,4 +22,3 @@ deb_packages_general:
   - wget
   - ncdu
   - 7zip
-

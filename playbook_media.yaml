@@ -1,4 +1,3 @@
-
 ---
 - name: Media server playbook
   hosts: media
@@ -6,4 +5,4 @@
   gather_facts: true
 
   roles:
-    - ../roles/media
+    - media
