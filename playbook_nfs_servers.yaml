@@ -6,4 +6,4 @@
   gather_facts: true
 
   roles:
-    - ../roles/nfs-server
+    - ../roles/nfs_server
