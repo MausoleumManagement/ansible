@@ -1,5 +1,4 @@
 - name: Ensure nfs-kernel-server is installed
-  when: ansible_os_family == 'Debian'
   ansible.builtin.apt:
     pkg: nfs-kernel-server
   become: true
