@@ -12,4 +12,5 @@
   when: ansible_os_family == 'Debian'
   ansible.builtin.apt:
     pkg: "{{ apt_packages }}"
+    update_cache: true
   become: true
