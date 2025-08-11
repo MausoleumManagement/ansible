@@ -1,1 +1,1 @@
-pve001.irminsul:/wunderhort/medien /wunderhort/medien nfs noauto,noatime,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,_netdev 0 0
+pve022.irminsul:/wunderhort/medien /wunderhort/medien nfs noauto,noatime,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,_netdev 0 0
