@@ -1,0 +1,7 @@
+---
+- name: ZFS Server config playbook
+  hosts: zfs-master
+  remote_user: root
+
+  roles:
+    - zfs_sanoid

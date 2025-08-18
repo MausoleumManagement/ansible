@@ -1,0 +1,23 @@
+[wunderhort]
+	use_template = hot
+	recursive = yes
+	process_children_only = yes
+
+[wunderhort/scratch]
+	autosnap = no
+
+[wunderhort/backup]
+	autosnap = no
+
+#############################
+# templates below this line #
+#############################
+
+[template_hot]
+        frequently = 0
+        hourly = 36
+        daily = 14
+        monthly = 2
+        yearly = 2
+        autosnap = yes
+        autoprune = yes

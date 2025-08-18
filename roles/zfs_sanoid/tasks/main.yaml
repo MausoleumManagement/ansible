@@ -1,0 +1,37 @@
+---
+- name: Create sanoid config dir
+  ansible.builtin.file:
+    path: "/etc/sanoid"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Template /etc/sanoid/sanoid.conf
+  ansible.builtin.template:
+    src: sanoid.conf.j2
+    dest: "/etc/sanoid/sanoid.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Install sanoid using apt
+  ansible.builtin.apt:
+    pkg: sanoid
+    update_cache: true
+  become: true
+
+- name: Validate sanoid.conf syntax
+  ansible.builtin.command: sanoid --readonly --verbose --cron
+  register: sanoid_check
+  failed_when: sanoid_check.rc != 0
+  changed_when: false
+
+- name: Enable and start sanoid.timer unit
+  ansible.builtin.systemd_service:
+    name: sanoid.timer
+    state: started
+    enabled: true
+    daemon_reload: true
