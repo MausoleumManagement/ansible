@@ -1,0 +1,7 @@
+---
+- name: Pihole config playbook
+  hosts: pihole.irminsul
+  remote_user: leon
+
+  roles:
+    - pihole_config
