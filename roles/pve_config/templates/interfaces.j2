@@ -1,0 +1,17 @@
+auto lo
+iface lo inet loopback
+
+iface eno1 inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+	address {{ hostvars[inventory_hostname].ipv4_address}}/21
+	gateway 192.168.8.1
+	bridge-ports eno1
+	bridge-stp off
+	bridge-fd 0
+
+iface eno2 inet manual
+
+
+source /etc/network/interfaces.d/*

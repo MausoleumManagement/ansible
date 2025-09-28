@@ -1,0 +1,20 @@
+# https://pve.proxmox.com/wiki/Package_Repositories
+
+- name: Template /etc/network/interfaces
+  ansible.builtin.template:
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Template /etc/resolv.conf
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+

@@ -1,3 +1,5 @@
+- name: Configure networking
+  ansible.builtin.include_tasks: network.yaml
 - name: Run apt tasks
   ansible.builtin.include_tasks: apt.yaml
 - name: Run sshd configuration tasks
