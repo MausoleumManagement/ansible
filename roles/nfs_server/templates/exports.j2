@@ -11,8 +11,7 @@
 # synchronous operations will wait for the backend to confirm
 # this is the default after nfs-utils 1.0.0
 
-#
-
+# personal
 /wunderhort/backup			192.168.15.0/28(rw,sync,no_subtree_check)
 /wunderhort/dokumente			192.168.15.0/28(rw,sync,no_subtree_check)
 /wunderhort/home			192.168.15.0/28(rw,sync,no_subtree_check)
@@ -21,11 +20,16 @@
 /wunderhort/passwoerter			192.168.15.0/28(rw,sync,no_subtree_check)
 /wunderhort/programming			192.168.15.0/28(rw,sync,no_subtree_check,insecure)
 /wunderhort/projekte			192.168.15.0/28(rw,sync,no_subtree_check)
-/wunderhort/pve-general-storage		192.168.9.0/24(rw,no_subtree_check,insecure,no_root_squash,anonuid=100,anongid=100)
 /wunderhort/research			192.168.15.0/28(rw,sync,no_subtree_check)
 /wunderhort/scratch			192.168.15.0/28(rw,sync,no_subtree_check)
 /wunderhort/stl				192.168.15.0/28(rw,sync,no_subtree_check)
 /wunderhort/tabletop			192.168.15.0/28(rw,sync,no_subtree_check)
+
+# other home network users
+/wunderhort/rosetta			192.168.15.32/27(rw,sync,no_subtree_check)
+
+# Proxmox 
+/wunderhort/pve-general-storage		192.168.9.0/24(rw,no_subtree_check,insecure,no_root_squash,anonuid=100,anongid=100)
 
 # Nekropolis Kubernetes Cluster
 /wunderhort/medien			192.168.10.0/25(ro,sync,no_subtree_check)
