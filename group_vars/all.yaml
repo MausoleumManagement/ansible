@@ -12,6 +12,7 @@ deb_packages_general:
   - python-is-python3
   # admin
   - rsync
+  - rclone
   - nmap
   - inetutils-telnet
   - btop
