@@ -1,0 +1,15 @@
+---
+# Rolling reboot of all hosts, one at a time.
+# After each host reboots and SSH comes back,
+# wait for user confirmation before continuing
+
+- name: Rolling reboot of a group of hosts
+  hosts: pve
+  # process one host at a time
+  serial: 1
+  become: true
+  roles:
+    - role: rolling_reboot
+      # Override defaults if needed:
+      # pve_reboot_timeout: 900
+      # pve_post_reboot_delay: 60

@@ -1,0 +1,15 @@
+---
+# Maximum seconds to wait for the host to come back after reboot
+pve_reboot_timeout: 600
+
+# Seconds to wait before issuing the reboot command
+pve_pre_reboot_delay: 5
+
+# Seconds to wait after reboot before first connection check
+pve_post_reboot_delay: 30
+
+# Seconds to wait before starting SSH availability checks
+pve_ssh_check_delay: 10
+
+# Maximum seconds to wait for SSH to become available
+pve_ssh_check_timeout: 300

@@ -1,0 +1,40 @@
+---
+# Role: pve_cluster_reboot
+# Reboots each host in a PVE cluster one at a time, waiting for SSH
+# availability after each reboot and prompting the user before continuing.
+#
+# Usage: Run with `serial: 1` on the play to ensure one host at a time.
+
+- name: Display pre-reboot notice
+  ansible.builtin.debug:
+    msg: >-
+      ========================================
+      Preparing to reboot: {{ inventory_hostname }}
+      ========================================
+
+- name: Reboot the host
+  ansible.builtin.reboot:
+    reboot_timeout: "{{ pve_reboot_timeout }}"
+    msg: "Ansible-triggered reboot"
+    pre_reboot_delay: "{{ pve_pre_reboot_delay }}"
+    post_reboot_delay: "{{ pve_post_reboot_delay }}"
+
+- name: Verify SSH is reachable after reboot
+  ansible.builtin.wait_for_connection:
+    delay: "{{ pve_ssh_check_delay }}"
+    timeout: "{{ pve_ssh_check_timeout }}"
+
+- name: Confirm host is back online
+  ansible.builtin.debug:
+    msg: >-
+      ========================================
+      {{ inventory_hostname }} is back online via SSH.
+      Perform your manual checks now.
+      ========================================
+
+- name: Prompt user to continue to the next host
+  ansible.builtin.pause:
+    prompt: >-
+      Host {{ inventory_hostname }} has been rebooted and is reachable via SSH.
+      Perform any additional checks, then press ENTER to continue
+      to the next host (or Ctrl+C then 'A' to abort the playbook).
