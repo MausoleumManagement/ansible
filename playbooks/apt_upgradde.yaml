@@ -1,0 +1,8 @@
+---
+- name: Debian Server upgrade playbook
+  hosts: pve
+  remote_user: root
+  gather_facts: true
+
+  roles:
+    - apt_upgrade
