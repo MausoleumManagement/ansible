@@ -1,5 +1,14 @@
 # https://pve.proxmox.com/wiki/Package_Repositories
 
+- name: Template /etc/apt.sources.list
+  ansible.builtin.template:
+    src: "sources.list.j2"
+    dest: "/etc/apt/sources.list"
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
 - name: Template /etc/apt.sources.list.d config files
   ansible.builtin.template:
     src: "{{ item }}.j2"
