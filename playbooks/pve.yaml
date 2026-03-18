@@ -1,7 +1,6 @@
 ---
 - name: PVE server config playbook
-  #hosts: pve
-  hosts: pve002.irminsul
+  hosts: pve
   remote_user: root
   gather_facts: true
 

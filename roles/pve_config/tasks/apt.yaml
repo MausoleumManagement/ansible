@@ -15,5 +15,8 @@
 
 - name: Ensure enterprise repo configuration is absent
   ansible.builtin.file:
-    path: "/etc/apt/sources.list.d/pve-enterprise.list"
+    path: "{{ item }}"
     state: absent
+  loop:
+    - "/etc/apt/sources.list.d/pve-enterprise.list"
+    - "/etc/apt/sources.list.d/pve-enterprise.sources"
