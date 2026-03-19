@@ -1,0 +1,85 @@
+---
+- name: Validate that required secrets are defined
+  ansible.builtin.assert:
+    that:
+      - garage_rpc_secret is defined and garage_rpc_secret | length > 0
+      - garage_admin_token is defined and garage_admin_token | length > 0
+      - garage_metrics_token is defined and garage_metrics_token | length > 0
+    fail_msg: >-
+      Required secrets are not set. You must provide garage_rpc_secret,
+      garage_admin_token, and garage_metrics_token via ansible-vault,
+      extra-vars, or a secrets manager. See defaults/main.yml for details.
+    quiet: true
+
+- name: Validate binary checksum is set
+  ansible.builtin.assert:
+    that:
+      - garage_binary_checksum != "sha256:REPLACE_ME_WITH_ACTUAL_SHA256_CHECKSUM"
+    fail_msg: >-
+      garage_binary_checksum is still set to the placeholder value.
+      Download the Garage binary for your target architecture and version,
+      compute its sha256sum, and set garage_binary_checksum accordingly.
+    quiet: true
+
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Download Garage binary
+  ansible.builtin.get_url:
+    url: "{{ garage_download_url }}"
+    dest: "{{ garage_binaries_dir }}/garage-{{ garage_version }}"
+    checksum: >-
+      {{ garage_binary_checksum }}
+    mode: "0755"
+    owner: root
+    group: root
+  become: true
+  notify: Restart garage
+  tags:
+    - download
+
+- name: Symlink garage binary to main path
+  ansible.builtin.file:
+    src: "{{ garage_binaries_dir }}/garage-{{ garage_version }}"
+    dest: "{{ garage_main_binary }}"
+    state: link
+    force: true
+  become: true
+  notify: Restart garage
+
+- name: Template Garage configuration file
+  ansible.builtin.template:
+    src: garage.toml.j2
+    dest: "{{ garage_config_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify: Restart garage
+
+- name: Create systemd service unit
+  ansible.builtin.template:
+    src: garage.service.j2
+    dest: "/etc/systemd/system/{{ garage_systemd_service }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  notify:
+    - Reload systemd
+    - Restart garage
+
+- name: Enable and start Garage service
+  ansible.builtin.systemd:
+    name: "{{ garage_systemd_service }}"
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true

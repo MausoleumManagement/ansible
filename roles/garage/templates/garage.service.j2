@@ -1,0 +1,18 @@
+# Managed by Ansible — do not edit manually
+
+[Unit]
+Description=Garage Data Store
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=www-data
+Group=www-data
+Environment='RUST_LOG={{ garage_log_level }}' 'RUST_BACKTRACE=1'
+ExecStart={{ garage_main_binary }} -c {{ garage_config_file }} server
+ProtectHome=true
+NoNewPrivileges=true
+LimitNOFILE=42000
+
+[Install]
+WantedBy=multi-user.target

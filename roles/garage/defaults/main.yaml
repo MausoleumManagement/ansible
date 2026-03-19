@@ -1,0 +1,70 @@
+---
+garage_version: "2.2.0"
+
+# CPU architecture for the binary download.
+# Maps ansible_architecture to Garage's release naming convention.
+# Supported: x86_64, aarch64, armv6l, i686
+garage_arch_map:
+  x86_64: "x86_64-unknown-linux-musl"
+  aarch64: "aarch64-unknown-linux-musl"
+  armv6l: "armv6l-unknown-linux-musleabihf"
+  i686: "i686-unknown-linux-musl"
+
+garage_arch: "{{ garage_arch_map[ansible_architecture] | default('x86_64-unknown-linux-musl') }}"
+
+# this checksum is required by the role, calculate with
+# sha256sum GARAGEBINARY
+garage_binary_checksum: "sha256:REPLACE_ME_WITH_ACTUAL_SHA256_CHECKSUM"
+
+garage_download_url: >-
+  https://garagehq.deuxfleurs.fr/_releases/v{{ garage_version }}/{{ garage_arch }}/garage
+
+# Where versioned binaries are stored
+garage_binaries_dir: "/usr/local/bin"
+
+# Path to the main garage binary (symlink to the versioned binary)
+garage_main_binary: "/usr/local/bin/garage"
+
+garage_config_file: "/etc/garage.toml"
+
+# Data and metadata directories
+# These paths are required by the systemd DynamicUser= hardening feature.
+garage_metadata_dir: "/var/lib/garage/meta"
+garage_data_dir: "/var/lib/garage/data"
+
+# garage can regularly scrub stored files for corruption, if the filesystem does not
+# have the functionality
+disable_fs_scrubbing: false
+
+# Database engine: "sqlite" (recommended for single-node) or "lmdb"
+garage_db_engine: "sqlite"
+
+# Replication factor: 1 for single-node, 2 or 3 for clusters
+garage_replication_factor: 1
+
+# RPC networking
+garage_rpc_bind_addr: "[::]:3901"
+garage_rpc_public_addr: "{{ ansible_default_ipv4.address | default('127.0.0.1') }}:3901"
+
+# S3 API settings
+garage_s3_api_bind_addr: "[::]:3900"
+garage_s3_region: "garage"
+garage_s3_root_domain: ".s3.garage.localhost"
+
+# S3 web endpoint
+garage_s3_web_bind_addr: "[::]:3902"
+garage_s3_web_root_domain: ".web.garage.localhost"
+garage_s3_web_index: "index.html"
+
+garage_k2v_api_bind_addr: "[::]:3904"
+
+garage_admin_api_bind_addr: "[::]:3903"
+
+# Bootstrap peers for cluster mode (list of "node_id@ip:port" strings)
+garage_bootstrap_peers: []
+
+# Logging level (passed as RUST_LOG)
+garage_log_level: "garage=info"
+
+# systemd service name
+garage_systemd_service: "garage"

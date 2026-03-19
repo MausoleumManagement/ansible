@@ -1,0 +1,28 @@
+---
+# SECRETS HANDLING:
+
+- hosts: pve022.irminsul
+  become: true
+  roles:
+    - garage
+  vars:
+    # https://garagehq.deuxfleurs.fr/download/
+    garage_version: "2.2.0"
+    # echo "sha256:$(sha256sum FILENAME)"
+    garage_binary_checksum: 'sha256:ec761bb996e8453e86fe68ccc1cf222c73bb1ef05ae0b540bd4827e7d1931aab'
+
+    garage_replication_factor: 1
+    garage_s3_region: "garage"
+    garage_metadata_dir: "/wunderhort/garage-s3/meta"
+    garage_data_dir: "/wunderhort/garage-s3/data"
+    disable_fs_scrubbing: true
+    garage_db_engine: "sqlite"
+
+    # TODO: Look secrets up from vault 
+    # openssl rand -hex 32
+    garage_rpc_secret: ""
+
+    # openssl rand -base64 32
+    garage_admin_token: ""
+    garage_metrics_token: ""
+
